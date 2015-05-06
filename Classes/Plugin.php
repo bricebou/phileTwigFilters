@@ -44,6 +44,14 @@ class Plugin extends \Phile\Plugin\AbstractPlugin implements \Phile\Gateway\Even
 				}
 			});
 			$data['engine']->addFilter($limit_words);
+			// datefr function -- Get the date in French
+			// in the PhileCMS config.php
+			// $config['date_format']    = '%A %d %B %Y';
+			$datefr = new \Twig_SimpleFilter('datefr', function ($string,$format){   
+				setlocale (LC_ALL, 'fr_FR.UTF8');
+        return htmlentities(strftime($format, strtotime($string)));
+			});
+			$data['engine']->addFilter($datefr);
 		}
 	}
 }
